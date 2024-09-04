@@ -1,0 +1,64 @@
+# Simple To-Do List in Python
+
+def show_menu():
+    print("\nTo-Do List Menu:")
+    print("1. View To-Do List")
+    print("2. Add Task")
+    print("3. Remove Task")
+    print("4. Mark Task as Completed")
+    print("5. Exit")
+
+def view_tasks(tasks):
+    if not tasks:
+        print("\nNo tasks in the list!")
+    else:
+        print("\nTo-Do List:")
+        for i, task in enumerate(tasks, 1):
+            status = "Completed" if task['completed'] else "Pending"
+            print(f"{i}. {task['title']} (Due: {task['due_date']}) - {status}")
+
+def add_task(tasks):
+    title = input("\nEnter the task title: ")
+    due_date = input("Enter the due date (e.g., 2024-09-30): ")
+    tasks.append({"title": title, "due_date": due_date, "completed": False})
+    print(f"Task '{title}' added!")
+
+def remove_task(tasks):
+    view_tasks(tasks)
+    task_num = int(input("\nEnter the task number to remove: "))
+    if 0 < task_num <= len(tasks):
+        removed_task = tasks.pop(task_num - 1)
+        print(f"Task '{removed_task['title']}' removed!")
+    else:
+        print("Invalid task number.")
+
+def mark_task_completed(tasks):
+    view_tasks(tasks)
+    task_num = int(input("\nEnter the task number to mark as completed: "))
+    if 0 < task_num <= len(tasks):
+        tasks[task_num - 1]['completed'] = True
+        print(f"Task '{tasks[task_num - 1]['title']}' marked as completed!")
+    else:
+        print("Invalid task number.")
+
+def main():
+    tasks = []
+    while True:
+        show_menu()
+        choice = input("\nChoose an option: ")
+        if choice == '1':
+            view_tasks(tasks)
+        elif choice == '2':
+            add_task(tasks)
+        elif choice == '3':
+            remove_task(tasks)
+        elif choice == '4':
+            mark_task_completed(tasks)
+        elif choice == '5':
+            print("Exiting the To-Do List program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
